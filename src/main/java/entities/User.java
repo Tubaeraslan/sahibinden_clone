@@ -15,5 +15,10 @@ public class User {
     private String email;
     private String password;
 
-
+    public User(Integer id, String userName, String email, String password) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
 }
