@@ -1,6 +1,6 @@
 package entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,12 +8,23 @@ import lombok.Setter;
 @Setter
 //ilerde veritabanı ile birleştir
 @Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "userName")
     private String userName;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    public User() {}
 
     public User(Integer id, String userName, String email, String password) {
         this.id = id;

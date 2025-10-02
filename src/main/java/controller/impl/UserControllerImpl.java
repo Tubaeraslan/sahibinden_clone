@@ -12,8 +12,6 @@ import java.util.List;
 @RequestMapping("/rest/api/users")
 public class UserControllerImpl implements IUserController {
 
-    private List<User>userList;
-
     @Autowired
     private IUserService userService;
 
@@ -26,7 +24,7 @@ public class UserControllerImpl implements IUserController {
     @Override
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id) {
-        return userService.getUserById(id); // artık Bean listesinden dönüyor
+        return userService.getUserById(id);
     }
 
     @Override

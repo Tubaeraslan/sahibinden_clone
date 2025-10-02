@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
 public class Listing {
 
     private Integer id;

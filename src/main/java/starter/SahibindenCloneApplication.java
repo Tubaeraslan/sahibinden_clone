@@ -1,19 +1,19 @@
 package starter;
 
-import config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@EntityScan(basePackages = {"entities"})
+@ComponentScan(basePackages = {"starter", "controller", "service", "repository"})
+@EnableJpaRepositories(basePackages = {"repository"})
 @SpringBootApplication
 public class SahibindenCloneApplication {
 
 	public static void main(String[] args) {
-
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-
-
-    }
+		SpringApplication.run(SahibindenCloneApplication.class, args);
+	}
 }

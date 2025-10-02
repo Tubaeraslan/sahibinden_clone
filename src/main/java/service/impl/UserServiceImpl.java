@@ -1,6 +1,7 @@
 package service.impl;
 
 import entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 import service.IUserService;
@@ -9,8 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserSeviceImpl implements IUserService {
+public class UserServiceImpl implements IUserService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override
