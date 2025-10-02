@@ -11,6 +11,7 @@ import java.util.List;
 @Configuration
 public class AppConfig {
 
+    //sonra tanımladığın listeleri sil databaseden çek artık
     @Bean
     public List<Brand> brandList(){
         List<Brand> brands = new ArrayList<>();

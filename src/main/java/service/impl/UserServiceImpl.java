@@ -1,5 +1,7 @@
 package service.impl;
 
+import dto.requestDto.UserRequestDto;
+import dto.responseDto.UserResponseDto;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import service.IUserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -15,20 +18,36 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    private UserResponseDto convertToResponseDto(User user){
+        UserResponseDto dto = new UserResponseDto();
+        dto.setId(user.getId());
+        dto.setUserName(user.getUserName());
+        dto.setEmail(user.getEmail());
+        return dto;
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponseDto getUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return user.map(this::convertToResponseDto).orElse(null);
     }
 
     @Override
-    public User addUser(User user) {
-        return userRepository.save(user);
+    public UserResponseDto addUser(UserRequestDto userRequest) {
+        User user = new User();
+        user.setUserName(userRequest.getUserName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        User saved = userRepository.save(user);
+        return convertToResponseDto(saved);
     }
 
     @Override

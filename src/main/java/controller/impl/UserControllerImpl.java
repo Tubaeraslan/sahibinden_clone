@@ -1,6 +1,8 @@
 package controller.impl;
 
 import controller.IUserController;
+import dto.requestDto.UserRequestDto;
+import dto.responseDto.UserResponseDto;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +19,20 @@ public class UserControllerImpl implements IUserController {
 
     @Override
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @Override
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id) {
+    public UserResponseDto getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
     @Override
     @PostMapping
-    public User addUser(@RequestBody User user){
-        return userService.addUser(user);
+    public UserResponseDto addUser(@RequestBody UserRequestDto userRequest){
+        return userService.addUser(userRequest);
     }
 
     @Override

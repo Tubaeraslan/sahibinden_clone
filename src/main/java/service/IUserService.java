@@ -1,5 +1,7 @@
 package service;
 
+import dto.responseDto.UserResponseDto;
+import dto.requestDto.UserRequestDto;
 import entities.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,11 +10,11 @@ import java.util.List;
 
 public interface IUserService {
 
-    List<User> getAllUsers();
+    List<UserResponseDto> getAllUsers();
 
-    User getUserById(Integer id);
+    UserResponseDto getUserById(Integer id);
 
-    User addUser(User user);
+    UserResponseDto addUser(UserRequestDto userRequest);
 
     void deleteUser(Integer id);
 

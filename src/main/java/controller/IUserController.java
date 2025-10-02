@@ -1,5 +1,7 @@
 package controller;
 
+import dto.requestDto.UserRequestDto;
+import dto.responseDto.UserResponseDto;
 import entities.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,11 +9,11 @@ import java.util.List;
 
 public interface IUserController {
 
-    List<User> getAllUsers();
+    List<UserResponseDto> getAllUsers();
 
-    User getUserById(@PathVariable Integer id);
+    UserResponseDto getUserById(@PathVariable Integer id);
 
-    User addUser(@RequestBody User user);
+    UserResponseDto addUser(@RequestBody UserRequestDto user);
 
     void deleteUser(@PathVariable Integer id);
 }
