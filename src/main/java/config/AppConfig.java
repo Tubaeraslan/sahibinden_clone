@@ -1,6 +1,5 @@
 package config;
 
-import entities.Brand;
 import entities.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,17 +11,6 @@ import java.util.List;
 public class AppConfig {
 
     //sonra tanımladığın listeleri sil databaseden çek artık
-    @Bean
-    public List<Brand> brandList(){
-        List<Brand> brands = new ArrayList<>();
-        brands.add(new Brand(1,"Toyota"));
-        brands.add(new Brand(2,"BMW"));
-        brands.add(new Brand(3,"Mercedes"));
-        brands.add(new Brand(4,"Volswagen"));
-        brands.add(new Brand(5,"Renault"));
-
-        return brands;
-    }
 
     @Bean
     public List<User> userList() {
