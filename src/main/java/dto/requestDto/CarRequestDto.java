@@ -12,5 +12,5 @@ public class CarRequestDto {
     private Double price;
     private Integer km;
     private String color;
-    //private Integer brandId   -car-brand- bağlantısı için lazım
+    private Integer brandId;   //-car-brand- bağlantısı için lazım
 }

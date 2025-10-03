@@ -13,6 +13,6 @@ public class CarResponseDto {
     private Double price;
     private Integer km;
     private String color;
-    //private String brandName;  car-brand kullanıcıya sadece markayı ver id ye gerek yok
+    private String brandName;  //car-brand kullanıcıya sadece markayı ver id ye gerek yok
 
 }

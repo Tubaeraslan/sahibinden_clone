@@ -31,16 +31,19 @@ public class Car {
     private String color;
 
     //Brand class ı ile merge le table lar arası ilişki kur
-    //private Brand brand;
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 
     public Car(){};
 
-    public Car(Integer id, String model, Integer year, double price, Integer km, String color) {
+    public Car(Integer id, String model, Integer year, double price, Integer km, String color, Brand brand) {
         this.id = id;
         this.model = model;
         this.year = year;
         this.price = price;
         this.km = km;
         this.color = color;
+        this.brand = brand;
     }
 }

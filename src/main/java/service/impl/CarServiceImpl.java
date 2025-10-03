@@ -2,9 +2,11 @@ package service.impl;
 
 import dto.requestDto.CarRequestDto;
 import dto.responseDto.CarResponseDto;
+import entities.Brand;
 import entities.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.BrandRepository;
 import repository.CarRepository;
 import service.ICarService;
 
@@ -18,6 +20,9 @@ public class CarServiceImpl implements ICarService {
     @Autowired
     private CarRepository carRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
     private CarResponseDto convertToResponseDto(Car car){
         CarResponseDto dto = new CarResponseDto();
         dto.setId(car.getId());
@@ -26,7 +31,7 @@ public class CarServiceImpl implements ICarService {
         dto.setPrice(car.getPrice());
         dto.setKm(car.getKm());
         dto.setColor(car.getColor());
-        //dto.setBrandName(car.getBrand().getName()); // marka ismini set et
+        dto.setBrandName(car.getBrand().getName()); // marka ismini set et
         return dto;
     }
 
@@ -47,11 +52,11 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     public CarResponseDto addCar(CarRequestDto carRequest) {
-        // Önce brand bulalım
-        //Optional<Brand> brandOpt = brandRepository.findById(carRequest.getBrandId());
-//        if (brandOpt.isEmpty()) {
-//            throw new RuntimeException("Brand not found with id: " + carRequest.getBrandId());
-//        }
+        // Önce brand tut
+        Optional<Brand> brandOpt = brandRepository.findById(carRequest.getBrandId());
+        if (brandOpt.isEmpty()) {
+           throw new RuntimeException("Brand not found with id: " + carRequest.getBrandId());
+        }
 
         Car car = new Car();
         car.setModel(carRequest.getModel());
@@ -59,7 +64,7 @@ public class CarServiceImpl implements ICarService {
         car.setPrice(carRequest.getPrice());
         car.setKm(carRequest.getKm());
         car.setColor(carRequest.getColor());
-        //car.setBrand(brandOpt.get());
+        car.setBrand(brandOpt.get());
 
         Car saved = carRepository.save(car);
         return convertToResponseDto(saved);
