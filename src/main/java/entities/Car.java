@@ -19,7 +19,7 @@ public class Car {
     private String model;
 
     @Column(name = "year")
-    private Integer year;
+    private Integer year;  //year integer olunca database de virgüllü gözüktü sonra düzelt
 
     @Column(name = "price")
     private double price;
