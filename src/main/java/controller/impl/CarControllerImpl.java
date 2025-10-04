@@ -3,6 +3,7 @@ package controller.impl;
 import controller.ICarController;
 import dto.requestDto.CarRequestDto;
 import dto.responseDto.CarResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import service.ICarService;
@@ -30,7 +31,7 @@ public class CarControllerImpl implements ICarController {
 
     @Override
     @PostMapping
-    public CarResponseDto addCar(CarRequestDto car) {
+    public CarResponseDto addCar(@Valid @RequestBody CarRequestDto car) {
         return carService.addCar(car);
     }
 

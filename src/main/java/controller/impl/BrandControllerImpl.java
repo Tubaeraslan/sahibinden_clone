@@ -3,6 +3,7 @@ package controller.impl;
 import controller.IBrandController;
 import dto.requestDto.BrandRequestDto;
 import dto.responseDto.BrandResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import service.IBrandService;
@@ -31,7 +32,7 @@ public class BrandControllerImpl implements IBrandController {
 
     @Override
     @PostMapping
-    public BrandResponseDto addBrand(BrandRequestDto brandRequest) {
+    public BrandResponseDto addBrand(@Valid @RequestBody BrandRequestDto brandRequest) {
         return brandService.addBrand(brandRequest);
     }
 

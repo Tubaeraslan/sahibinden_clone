@@ -4,6 +4,7 @@ import controller.IUserController;
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
 import entities.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
@@ -31,7 +32,7 @@ public class UserControllerImpl implements IUserController {
 
     @Override
     @PostMapping
-    public UserResponseDto addUser(@RequestBody UserRequestDto userRequest){
+    public UserResponseDto addUser(@Valid @RequestBody UserRequestDto userRequest){
         return userService.addUser(userRequest);
     }
 
