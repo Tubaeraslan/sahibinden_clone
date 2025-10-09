@@ -1,5 +1,6 @@
 package entities;
 
+import common.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "cars")
-public class Car {
+public class Car extends Auditable {
 
 
     @Id

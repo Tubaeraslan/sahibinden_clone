@@ -44,6 +44,9 @@ public class BrandServiceImpl implements IBrandService {
         Brand brand = new Brand();
         brand.setName(brandRequest.getName());
         Brand saved = brandRepository.save(brand);
+        //date control
+        System.out.println(saved.getCreatedDate());
+        System.out.println(saved.getUpdatedDate());
         return convertToResponseDto(saved);
     }
 

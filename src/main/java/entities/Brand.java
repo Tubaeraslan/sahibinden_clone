@@ -1,5 +1,6 @@
 package entities;
 
+import common.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "brands")
-public class Brand {
+public class Brand extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
