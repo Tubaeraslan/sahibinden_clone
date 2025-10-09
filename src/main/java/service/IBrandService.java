@@ -14,5 +14,7 @@ public interface IBrandService {
 
     BrandResponseDto addBrand(BrandRequestDto brandRequest);
 
+    BrandResponseDto updateBrand(Integer id, BrandRequestDto brandRequest);
+
     void deleteBrand(Integer id);
 }

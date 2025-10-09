@@ -2,6 +2,7 @@ package controller;
 
 import dto.requestDto.BrandRequestDto;
 import dto.responseDto.BrandResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,6 +15,8 @@ public interface IBrandController {
     BrandResponseDto getBrandById(@PathVariable Integer id);
 
     BrandResponseDto addBrand(@RequestBody BrandRequestDto brandRequest);
+
+    BrandResponseDto updateBrand(@PathVariable Integer id, @Valid @RequestBody BrandRequestDto brandRequest);
 
     void deleteBrand(@PathVariable Integer id);
 }

@@ -48,6 +48,15 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
+    public BrandResponseDto updateBrand(Integer id, BrandRequestDto brandRequest) {
+        Brand brand = brandRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Brand not found with id: " + id));
+        brand.setName(brandRequest.getName());
+        Brand updated = brandRepository.save(brand);
+        return convertToResponseDto(updated);
+    }
+
+    @Override
     public void deleteBrand(Integer id) {
         brandRepository.deleteById(id);
     }

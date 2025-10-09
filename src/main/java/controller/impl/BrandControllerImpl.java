@@ -37,6 +37,12 @@ public class BrandControllerImpl implements IBrandController {
     }
 
     @Override
+    @PutMapping("/{id}")
+    public BrandResponseDto updateBrand(@PathVariable Integer id, @Valid @RequestBody BrandRequestDto brandRequest) {
+        return brandService.updateBrand(id, brandRequest);
+    }
+
+    @Override
     @DeleteMapping("/{id}")
     public void deleteBrand(Integer id) {
         brandService.deleteBrand(id);
