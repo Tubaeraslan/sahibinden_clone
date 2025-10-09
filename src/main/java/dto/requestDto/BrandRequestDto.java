@@ -7,6 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 @Getter
 @Setter
 public class BrandRequestDto {
-    @NotEmpty(message = "Email cannot be empty")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 }

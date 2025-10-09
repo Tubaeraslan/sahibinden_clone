@@ -20,7 +20,7 @@ public class Car extends Auditable {
     private String model;
 
     @Column(name = "year")
-    private Integer year;  //year integer olunca database de virgüllü gözüktü sonra düzelt
+    private Integer year;
 
     @Column(name = "price")
     private double price;
