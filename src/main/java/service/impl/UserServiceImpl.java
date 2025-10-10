@@ -3,6 +3,7 @@ package service.impl;
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
 import entities.User;
+import exception.BadRequestException;
 import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserResponseDto addUser(UserRequestDto userRequest) {
+        boolean nameExists = userRepository.findAll()
+                .stream()
+                .anyMatch(u -> u.getUserName().equalsIgnoreCase(userRequest.getUserName()));
+        if (nameExists) {
+            throw new BadRequestException("User with this name already exists!");
+        }
         User user = new User();
         user.setUserName(userRequest.getUserName());
         user.setEmail(userRequest.getEmail());

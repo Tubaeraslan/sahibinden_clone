@@ -25,7 +25,7 @@ public class CarControllerImpl implements ICarController {
 
     @Override
     @GetMapping("/{id}")
-    public CarResponseDto getCarById(Integer id) {
+    public CarResponseDto getCarById(@PathVariable Integer id) {
         return carService.getCarById(id);
     }
 
@@ -37,7 +37,7 @@ public class CarControllerImpl implements ICarController {
 
     @Override
     @DeleteMapping("/{id}")
-    public void deleteCar(Integer id) {
+    public void deleteCar(@PathVariable Integer id) {
         carService.deleteCar(id);
     }
 }

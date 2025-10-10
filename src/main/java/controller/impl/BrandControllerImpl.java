@@ -26,7 +26,7 @@ public class BrandControllerImpl implements IBrandController {
 
     @Override
     @GetMapping("/{id}")
-    public BrandResponseDto getBrandById(Integer id) {
+    public BrandResponseDto getBrandById(@PathVariable Integer id) {
         return brandService.getBrandById(id);
     }
 
@@ -44,7 +44,7 @@ public class BrandControllerImpl implements IBrandController {
 
     @Override
     @DeleteMapping("/{id}")
-    public void deleteBrand(Integer id) {
+    public void deleteBrand(@PathVariable Integer id) {
         brandService.deleteBrand(id);
     }
 }

@@ -3,6 +3,7 @@ package service.impl;
 import dto.requestDto.BrandRequestDto;
 import dto.responseDto.BrandResponseDto;
 import entities.Brand;
+import exception.BadRequestException;
 import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,12 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public BrandResponseDto addBrand(BrandRequestDto brandRequest) {
+        boolean nameExists = brandRepository.findAll()
+                .stream()
+                .anyMatch(b -> b.getName().equalsIgnoreCase(brandRequest.getName()));
+        if (nameExists) {
+            throw new BadRequestException("Brand with this name already exists!");
+        }
         Brand brand = new Brand();
         brand.setName(brandRequest.getName());
         Brand saved = brandRepository.save(brand);
@@ -56,6 +63,9 @@ public class BrandServiceImpl implements IBrandService {
     public BrandResponseDto updateBrand(Integer id, BrandRequestDto brandRequest) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brand not found with id: " + id));
+        if (brandRequest.getName() == null || brandRequest.getName().isBlank()) {
+            throw new BadRequestException("Brand name cannot be empty!");
+        }
         brand.setName(brandRequest.getName());
         Brand updated = brandRepository.save(brand);
         return convertToResponseDto(updated);
