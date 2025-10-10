@@ -3,6 +3,7 @@ package service.impl;
 import dto.requestDto.BrandRequestDto;
 import dto.responseDto.BrandResponseDto;
 import entities.Brand;
+import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
@@ -35,8 +36,9 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public BrandResponseDto getBrandById(Integer id) {
-        Optional<Brand> brand = brandRepository.findById(id);
-        return brand.map(this::convertToResponseDto).orElse(null);
+        Brand brand = brandRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Brand not found with id: " + id));
+        return convertToResponseDto(brand);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public BrandResponseDto updateBrand(Integer id, BrandRequestDto brandRequest) {
         Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Brand not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Brand not found with id: " + id));
         brand.setName(brandRequest.getName());
         Brand updated = brandRepository.save(brand);
         return convertToResponseDto(updated);
@@ -61,6 +63,9 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void deleteBrand(Integer id) {
+        if (!brandRepository.existsById(id)){
+            throw new ResourceNotFoundException("Brand not found with id:" + id);
+        }
         brandRepository.deleteById(id);
     }
 }
