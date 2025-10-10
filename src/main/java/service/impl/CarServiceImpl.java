@@ -4,6 +4,7 @@ import dto.requestDto.CarRequestDto;
 import dto.responseDto.CarResponseDto;
 import entities.Brand;
 import entities.Car;
+import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
@@ -46,9 +47,12 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     public CarResponseDto getCarById(Integer id) {
-        Optional<Car> car = carRepository.findById(id);
-        return car.map(this::convertToResponseDto).orElse(null);
+        Car car = carRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Car not found with id:" + id));
+        return convertToResponseDto(car);
     }
+
+    //add update method
 
     @Override
     public CarResponseDto addCar(CarRequestDto carRequest) {
@@ -72,6 +76,9 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     public void deleteCar(Integer id) {
+        if (!carRepository.existsById(id)){
+            throw new ResourceNotFoundException("Car not found with id:" + id);
+        }
         carRepository.deleteById(id);
     }
 }
