@@ -3,6 +3,7 @@ package service.impl;
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
 import entities.User;
+import exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
@@ -36,9 +37,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserResponseDto getUserById(Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.map(this::convertToResponseDto).orElse(null);
+       User user = userRepository.findById(id)
+               .orElseThrow(()-> new ResourceNotFoundException("User not found with id:" + id));
+       return convertToResponseDto(user);
     }
+
+    //add update method
 
     @Override
     public UserResponseDto addUser(UserRequestDto userRequest) {
@@ -52,6 +56,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void deleteUser(Integer id) {
+        if (!userRepository.existsById(id)){
+            throw new ResourceNotFoundException("User not found with id:" + id);
+        }
         userRepository.deleteById(id);
     }
 }
