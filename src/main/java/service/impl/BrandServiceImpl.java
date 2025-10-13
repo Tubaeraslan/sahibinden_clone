@@ -5,6 +5,7 @@ import dto.responseDto.BrandResponseDto;
 import entities.Brand;
 import exception.BadRequestException;
 import exception.ResourceNotFoundException;
+import mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
@@ -20,18 +21,14 @@ public class BrandServiceImpl implements IBrandService {
     @Autowired
     private BrandRepository brandRepository;
 
-    private BrandResponseDto convertToResponseDto(Brand brand){
-        BrandResponseDto dto = new BrandResponseDto();
-        dto.setId(brand.getId());
-        dto.setName(brand.getName());
-        return dto;
-    }
+    @Autowired
+    private BrandMapper brandMapper;
 
     @Override
     public List<BrandResponseDto> getAllBrands() {
         return brandRepository.findAll()
                 .stream()
-                .map(this::convertToResponseDto)
+                .map(brandMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -39,7 +36,7 @@ public class BrandServiceImpl implements IBrandService {
     public BrandResponseDto getBrandById(Integer id) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Brand not found with id: " + id));
-        return convertToResponseDto(brand);
+        return brandMapper.toDto(brand);
     }
 
     @Override
@@ -50,13 +47,12 @@ public class BrandServiceImpl implements IBrandService {
         if (nameExists) {
             throw new BadRequestException("Brand with this name already exists!");
         }
-        Brand brand = new Brand();
-        brand.setName(brandRequest.getName());
+        Brand brand = brandMapper.toEntity(brandRequest);
         Brand saved = brandRepository.save(brand);
         //date control
         System.out.println(saved.getCreatedDate());
         System.out.println(saved.getUpdatedDate());
-        return convertToResponseDto(saved);
+        return brandMapper.toDto(saved);
     }
 
     @Override
@@ -68,7 +64,7 @@ public class BrandServiceImpl implements IBrandService {
         }
         brand.setName(brandRequest.getName());
         Brand updated = brandRepository.save(brand);
-        return convertToResponseDto(updated);
+        return brandMapper.toDto(updated);
     }
 
     @Override
