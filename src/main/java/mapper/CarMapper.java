@@ -16,6 +16,7 @@ public interface CarMapper {
     // DTO -> ENTITY
     Car toEntity(CarRequestDto dto);
 
+    @Mapping(source = "brand.name", target = "brandName")
     // ENTITY -> DTO
     CarResponseDto toDto(Car car);
 

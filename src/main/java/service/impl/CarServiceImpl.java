@@ -7,11 +7,14 @@ import entities.Car;
 import exception.ResourceNotFoundException;
 import mapper.CarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
 import repository.CarRepository;
 import service.ICarService;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,11 +33,10 @@ public class CarServiceImpl implements ICarService {
 
 
     @Override
-    public List<CarResponseDto> getAllCars() {
-        return carRepository.findAll()
-                .stream()
-                .map(carMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<CarResponseDto> getAllCars(Integer page,Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Car> carPage = carRepository.findAll(pageable);
+        return carPage.map(carMapper::toDto);
     }
 
     @Override

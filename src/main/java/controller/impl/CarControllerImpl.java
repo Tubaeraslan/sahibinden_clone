@@ -5,6 +5,7 @@ import dto.requestDto.CarRequestDto;
 import dto.responseDto.CarResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import service.ICarService;
 
@@ -19,8 +20,10 @@ public class CarControllerImpl implements ICarController {
 
     @Override
     @GetMapping
-    public List<CarResponseDto> getAllCars() {
-        return carService.getAllCars();
+    public Page<CarResponseDto> getAllCars(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "2") Integer size) {
+        return carService.getAllCars(page, size);
     }
 
     @Override
