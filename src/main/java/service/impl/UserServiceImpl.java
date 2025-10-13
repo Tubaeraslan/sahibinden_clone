@@ -7,6 +7,8 @@ import exception.BadRequestException;
 import exception.ResourceNotFoundException;
 import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 import service.IUserService;
@@ -25,11 +27,10 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public List<UserResponseDto> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<UserResponseDto> getAllUsers(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return userRepository.findAll(pageRequest)
+                .map(userMapper::toDto);
     }
 
     @Override

@@ -6,6 +6,7 @@ import dto.responseDto.UserResponseDto;
 import entities.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
 
@@ -20,8 +21,10 @@ public class UserControllerImpl implements IUserController {
 
     @Override
     @GetMapping
-    public List<UserResponseDto> getAllUsers() {
-        return userService.getAllUsers();
+    public Page<UserResponseDto> getAllUsers(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "2") Integer size) {
+        return userService.getAllUsers(page,size);
     }
 
     @Override

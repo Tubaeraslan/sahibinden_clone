@@ -3,13 +3,14 @@ package controller;
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
 import entities.User;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface IUserController {
 
-    List<UserResponseDto> getAllUsers();
+    Page<UserResponseDto> getAllUsers(Integer page, Integer size);
 
     UserResponseDto getUserById(@PathVariable Integer id);
 

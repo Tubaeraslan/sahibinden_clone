@@ -7,6 +7,8 @@ import exception.BadRequestException;
 import exception.ResourceNotFoundException;
 import mapper.BrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
 import service.IBrandService;
@@ -25,13 +27,11 @@ public class BrandServiceImpl implements IBrandService {
     private BrandMapper brandMapper;
 
     @Override
-    public List<BrandResponseDto> getAllBrands() {
-        return brandRepository.findAll()
-                .stream()
-                .map(brandMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<BrandResponseDto> getAllBrands(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return brandRepository.findAll(pageRequest)
+                .map(brandMapper::toDto);
     }
-
     @Override
     public BrandResponseDto getBrandById(Integer id) {
         Brand brand = brandRepository.findById(id)
