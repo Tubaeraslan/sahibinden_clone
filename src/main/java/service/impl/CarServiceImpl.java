@@ -5,6 +5,7 @@ import dto.responseDto.CarResponseDto;
 import entities.Brand;
 import entities.Car;
 import exception.ResourceNotFoundException;
+import mapper.CarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.BrandRepository;
@@ -24,24 +25,15 @@ public class CarServiceImpl implements ICarService {
     @Autowired
     private BrandRepository brandRepository;
 
-    private CarResponseDto convertToResponseDto(Car car){
-        CarResponseDto dto = new CarResponseDto();
-        dto.setId(car.getId());
-        dto.setModel(car.getModel());
-        dto.setYear(car.getYear());
-        dto.setPrice(car.getPrice());
-        dto.setKm(car.getKm());
-        dto.setColor(car.getColor());
-        dto.setBrandName(car.getBrand().getName()); // marka ismini set et
-        return dto;
-    }
+    @Autowired
+    private CarMapper carMapper;
 
 
     @Override
     public List<CarResponseDto> getAllCars() {
         return carRepository.findAll()
                 .stream()
-                .map(this::convertToResponseDto)
+                .map(carMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +41,7 @@ public class CarServiceImpl implements ICarService {
     public CarResponseDto getCarById(Integer id) {
         Car car = carRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Car not found with id:" + id));
-        return convertToResponseDto(car);
+        return carMapper.toDto(car);
     }
 
     //add update method
@@ -62,16 +54,11 @@ public class CarServiceImpl implements ICarService {
            throw new RuntimeException("Brand not found with id: " + carRequest.getBrandId());
         }
 
-        Car car = new Car();
-        car.setModel(carRequest.getModel());
-        car.setYear(carRequest.getYear());
-        car.setPrice(carRequest.getPrice());
-        car.setKm(carRequest.getKm());
-        car.setColor(carRequest.getColor());
+        Car car = carMapper.toEntity(carRequest);
         car.setBrand(brandOpt.get());
 
         Car saved = carRepository.save(car);
-        return convertToResponseDto(saved);
+        return carMapper.toDto(saved);
     }
 
     @Override

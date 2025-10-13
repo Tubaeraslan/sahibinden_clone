@@ -5,6 +5,7 @@ import dto.responseDto.UserResponseDto;
 import entities.User;
 import exception.BadRequestException;
 import exception.ResourceNotFoundException;
+import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
@@ -20,19 +21,14 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-    private UserResponseDto convertToResponseDto(User user){
-        UserResponseDto dto = new UserResponseDto();
-        dto.setId(user.getId());
-        dto.setUserName(user.getUserName());
-        dto.setEmail(user.getEmail());
-        return dto;
-    }
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(this::convertToResponseDto)
+                .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -40,7 +36,7 @@ public class UserServiceImpl implements IUserService {
     public UserResponseDto getUserById(Integer id) {
        User user = userRepository.findById(id)
                .orElseThrow(()-> new ResourceNotFoundException("User not found with id:" + id));
-       return convertToResponseDto(user);
+       return userMapper.toDto(user);
     }
 
     //add update method
@@ -53,12 +49,9 @@ public class UserServiceImpl implements IUserService {
         if (nameExists) {
             throw new BadRequestException("User with this name already exists!");
         }
-        User user = new User();
-        user.setUserName(userRequest.getUserName());
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+        User user = userMapper.toEntity(userRequest);
         User saved = userRepository.save(user);
-        return convertToResponseDto(saved);
+        return userMapper.toDto(saved);
     }
 
     @Override
