@@ -1,18 +1,19 @@
-package service.impl;
+package web.service.impl;
 
 import entities.Car;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.CarRepository;
+import web.service.ICarWebService;
 
 import java.util.List;
 @Service
-public class CarWebService {
+public class CarWebServiceImpl implements ICarWebService {
     private final CarRepository carRepository;
 
     @Autowired
-    public CarWebService(CarRepository carRepository) {
+    public CarWebServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 

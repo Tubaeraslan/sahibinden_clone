@@ -1,21 +1,24 @@
-package controller.impl;
+package web.controller.impl;
 
+import controller.ICarController;
 import entities.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.impl.CarWebService;
+import web.controller.ICarWebController;
+import web.service.ICarWebService;
+import web.service.impl.CarWebServiceImpl;
 
 import java.util.List;
 
 @Controller
-public class CarWebController {
-    private final CarWebService carWebService;
+public class CarWebControllerImpl implements ICarWebController {
+    private final ICarWebService carWebService;
 
     @Autowired
-    public CarWebController(CarWebService carWebService) {
+    public CarWebControllerImpl(CarWebServiceImpl carWebService) {
         this.carWebService = carWebService;
     }
 
