@@ -22,6 +22,14 @@ public class CarWebControllerImpl implements ICarWebController {
         this.carWebService = carWebService;
     }
 
+    @GetMapping("/")
+    public String homePage(Model model) {
+        List<Car> cars = carWebService.getAllCars();
+        if (cars == null) cars = List.of(); // Boş liste kontrolü
+        model.addAttribute("cars", cars);
+        return "index"; // templates/index.html render
+    }
+
     @GetMapping("/cars")
     public String getCars(Model model) {
         // Güvenli liste kontrolü
