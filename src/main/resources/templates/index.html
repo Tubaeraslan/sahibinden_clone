@@ -99,29 +99,73 @@
     <div class="row">
         <!-- Sidebar / Filters -->
         <div class="col-lg-3 mb-4">
-            <div class="sidebar">
-                <h5>Filters</h5>
+            <form class="sidebar" th:action="@{/cars}" method="get">
+                <h5 class="mb-3">Filtreler</h5>
                 <hr>
+
+                <!-- Marka Seçimi -->
                 <div class="mb-3">
-                    <label class="form-label">Brand</label>
-                    <select class="form-select">
-                        <option>All Brands</option>
+                    <label class="form-label">Marka</label>
+                    <select class="form-select" name="brand">
+                        <option value="">Tüm Markalar</option>
                         <option>BMW</option>
                         <option>Mercedes</option>
                         <option>Audi</option>
+                        <option>Toyota</option>
+                        <option>Renault</option>
+                        <option>Volkswagen</option>
                     </select>
                 </div>
+
+                <!-- Fiyat Aralığı -->
                 <div class="mb-3">
-                    <label class="form-label">Price Range</label>
-                    <input type="text" class="form-control" placeholder="e.g. 100000-300000">
+                    <label class="form-label">Fiyat Aralığı (₺)</label>
+                    <div class="d-flex gap-2">
+                        <input type="number" class="form-control" name="minPrice" placeholder="Min">
+                        <input type="number" class="form-control" name="maxPrice" placeholder="Max">
+                    </div>
                 </div>
+
+                <!-- Model Yılı -->
                 <div class="mb-3">
-                    <label class="form-label">Year</label>
-                    <input type="text" class="form-control" placeholder="e.g. 2015-2023">
+                    <label class="form-label">Model Yılı</label>
+                    <div class="d-flex gap-2">
+                        <input type="number" class="form-control" name="minYear" placeholder="Min">
+                        <input type="number" class="form-control" name="maxYear" placeholder="Max">
+                    </div>
                 </div>
-                <button class="btn btn-primary w-100">Apply Filters</button>
-            </div>
+
+                <!-- Renk -->
+                <div class="mb-3">
+                    <label class="form-label">Renk</label>
+                    <select class="form-select" name="color">
+                        <option value="">Tüm Renkler</option>
+                        <option>White</option>
+                        <option>Black</option>
+                        <option>Grey</option>
+                        <option>Red</option>
+                        <option>Blue</option>
+                    </select>
+                </div>
+
+                <!-- Sıralama -->
+                <div class="mb-3">
+                    <label class="form-label">Sıralama</label>
+                    <select class="form-select" name="sort">
+                        <option value="">Varsayılan</option>
+                        <option value="priceAsc">Fiyata göre artan</option>
+                        <option value="priceDesc">Fiyata göre azalan</option>
+                        <option value="yearDesc">Yıla göre yeni</option>
+                        <option value="yearAsc">Yıla göre eski</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-2">Filtreyi Uygula</button>
+                <a href="/cars" class="btn btn-secondary w-100 mt-2">Temizle</a>
+            </form>
         </div>
+
+    </div>
 
         <!-- Car Grid -->
         <div class="col-lg-9">
