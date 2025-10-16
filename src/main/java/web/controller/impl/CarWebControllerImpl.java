@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import web.controller.ICarWebController;
 import web.service.ICarWebService;
@@ -31,11 +32,15 @@ public class CarWebControllerImpl implements ICarWebController {
     }
 
     @GetMapping("/cars")
-    public String getCars(Model model) {
+    public String getCars(@RequestParam(required = false) String query, Model model) {
         // Güvenli liste kontrolü
         List<Car> cars = carWebService.getAllCars();
-        if (cars == null) {
-            cars = List.of(); // Boş liste
+
+        if (query !=null && !query.isBlank()){
+            cars = carWebService.searchCars(query);
+        }
+        else{
+            cars=carWebService.getAllCars();
         }
         model.addAttribute("cars", cars);
         return "cars"; // templates/cars.html render

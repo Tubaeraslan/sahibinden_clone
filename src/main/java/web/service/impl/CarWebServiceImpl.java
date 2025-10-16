@@ -8,6 +8,8 @@ import repository.CarRepository;
 import web.service.ICarWebService;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CarWebServiceImpl implements ICarWebService {
     private final CarRepository carRepository;
@@ -17,6 +19,7 @@ public class CarWebServiceImpl implements ICarWebService {
         this.carRepository = carRepository;
     }
 
+    @Override
     public List<Car> getAllCars() {
         try {
             List<Car> cars = carRepository.findAll();
@@ -29,5 +32,22 @@ public class CarWebServiceImpl implements ICarWebService {
         } catch (Exception e) {
             throw new BadRequestException("Error fetching cars: " + e.getMessage());
         }
+    }
+    @Override
+    public List<Car> searchCars(String query) {
+        List<Car> cars = carRepository.findAll();
+
+        if (query == null || query.isBlank()) {
+            return cars;
+        }
+
+        // Küçük/büyük harf duyarsız filtreleme (Java tarafında)
+        String lowerQuery = query.toLowerCase();
+
+        return cars.stream()
+                .filter(car -> car.getModel() != null &&
+                        car.getModel().toLowerCase().contains(lowerQuery))
+                .collect(Collectors.toList());
+
     }
 }
