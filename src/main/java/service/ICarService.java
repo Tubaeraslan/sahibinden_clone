@@ -15,5 +15,7 @@ public interface ICarService {
 
     CarResponseDto addCar(CarRequestDto car);
 
+    CarResponseDto updateCar(Integer id, CarRequestDto carRequest);
+
     void deleteCar(Integer id);
 }

@@ -38,6 +38,11 @@ public class CarControllerImpl implements ICarController {
         return carService.addCar(car);
     }
 
+    @PutMapping("/{id}")
+    public CarResponseDto updateCar(@PathVariable Integer id, @Valid @RequestBody CarRequestDto carRequest) {
+        return carService.updateCar(id, carRequest);
+    }
+
     @Override
     @DeleteMapping("/{id}")
     public void deleteCar(@PathVariable Integer id) {

@@ -64,6 +64,27 @@ public class CarServiceImpl implements ICarService {
     }
 
     @Override
+    public CarResponseDto updateCar(Integer id, CarRequestDto carRequest) {
+        // 1️⃣ Mevcut araba var mı kontrol et
+        Car existingCar = carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
+
+        // 2️⃣ Brand kontrolü
+        Brand brand = brandRepository.findById(carRequest.getBrandId())
+                .orElseThrow(() -> new ResourceNotFoundException("Brand not found with id: " + carRequest.getBrandId()));
+
+        // 3️⃣ Alanları güncelle
+        existingCar.setModel(carRequest.getModel());
+        existingCar.setPrice(carRequest.getPrice());
+        existingCar.setYear(carRequest.getYear());
+        existingCar.setBrand(brand);
+
+        // 4️⃣ Kaydet ve DTO olarak döndür
+        Car updatedCar = carRepository.save(existingCar);
+        return carMapper.toDto(updatedCar);
+    }
+
+    @Override
     public void deleteCar(Integer id) {
         if (!carRepository.existsById(id)){
             throw new ResourceNotFoundException("Car not found with id:" + id);
