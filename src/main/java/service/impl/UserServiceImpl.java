@@ -56,6 +56,30 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserResponseDto updateUser(Integer id, UserRequestDto userRequest) {
+        //Mevcut kullanıcı var mı kontrol et
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+
+        // Aynı kullanıcı adından başka biri var mı kontrol et (duplicate check)
+        boolean nameExists = userRepository.findAll()
+                .stream()
+                .anyMatch(u -> !u.getId().equals(id) &&
+                        u.getUserName().equalsIgnoreCase(userRequest.getUserName()));
+
+        if (nameExists) {
+            throw new BadRequestException("User with this name already exists!");
+        }
+
+        existingUser.setUserName(userRequest.getUserName());
+        existingUser.setEmail(userRequest.getEmail());
+        existingUser.setPassword(userRequest.getPassword());
+
+        User updated = userRepository.save(existingUser);
+        return userMapper.toDto(updated);
+    }
+
+    @Override
     public void deleteUser(Integer id) {
         if (!userRepository.existsById(id)){
             throw new ResourceNotFoundException("User not found with id:" + id);

@@ -40,6 +40,12 @@ public class UserControllerImpl implements IUserController {
     }
 
     @Override
+    @PutMapping("/{id}")
+    public UserResponseDto updateUser(@PathVariable Integer id, @Valid @RequestBody UserRequestDto userRequest) {
+        return userService.updateUser(id, userRequest);
+    }
+
+    @Override
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id){
         userService.deleteUser(id);
