@@ -30,7 +30,7 @@ public class BrandServiceImpl implements IBrandService {
     public Page<BrandResponseDto> getAllBrands(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         return brandRepository.findAll(pageRequest)
-                .map(brandMapper::toDto);
+                .map(brandMapper::toDto);    //entityleri response a çevir
     }
     @Override
     public BrandResponseDto getBrandById(Integer id) {
