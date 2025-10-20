@@ -9,6 +9,7 @@ import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 import service.IUserService;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Page<UserResponseDto> getAllUsers(Integer page, Integer size) {
@@ -51,6 +55,7 @@ public class UserServiceImpl implements IUserService {
             throw new BadRequestException("User with this name already exists!");
         }
         User user = userMapper.toEntity(userRequest);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User saved = userRepository.save(user);
         return userMapper.toDto(saved);
     }
@@ -73,7 +78,7 @@ public class UserServiceImpl implements IUserService {
 
         existingUser.setUserName(userRequest.getUserName());
         existingUser.setEmail(userRequest.getEmail());
-        existingUser.setPassword(userRequest.getPassword());
+        existingUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         User updated = userRepository.save(existingUser);
         return userMapper.toDto(updated);
