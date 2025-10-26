@@ -50,6 +50,7 @@ public class BrandServiceImpl implements IBrandService {
         Brand brand = brandMapper.toEntity(brandRequest);
         Brand saved = brandRepository.save(brand);
         //date control
+        System.out.println("DATE CONTROL");
         System.out.println(saved.getCreatedDate());
         System.out.println(saved.getUpdatedDate());
         return brandMapper.toDto(saved);

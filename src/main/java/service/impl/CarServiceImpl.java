@@ -58,6 +58,9 @@ public class CarServiceImpl implements ICarService {
         car.setBrand(brandOpt.get());
 
         Car saved = carRepository.save(car);
+        System.out.println("DATE CONTROL");
+        System.out.println(saved.getCreatedDate());
+        System.out.println(saved.getUpdatedDate());
         return carMapper.toDto(saved);
     }
 
