@@ -20,6 +20,7 @@ public class CarWebServiceImpl implements ICarWebService {
     }
 
     @Override
+    //N+1 PROBLEM
     public List<Car> getAllCars() {
         try {
             List<Car> cars = carRepository.findAll();

@@ -37,6 +37,7 @@ public class LoginWebControllerImpl implements ILoginWebController {
 
     @PostMapping("/login")
     @Override
+    //add findByUserName
     public String loginUser(String username, String password, Model model) {
         List<User> users = userRepository.findAll(); // Tüm kullanıcıları getir
 
