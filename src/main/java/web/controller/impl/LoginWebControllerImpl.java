@@ -39,20 +39,12 @@ public class LoginWebControllerImpl implements ILoginWebController {
     @Override
     //add findByUserName
     public String loginUser(String username, String password, Model model) {
-        List<User> users = userRepository.findAll(); // Tüm kullanıcıları getir
-
-        User matchedUser = null;
-        for (User user : users) {
-            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-                matchedUser = user;
-                break;
-            }
+        User user = userRepository.findByUserName(username);
+        if (user !=null && user.getPassword().equals(password)){
+            return "redirect:/";
         }
-
-        if (matchedUser != null) {
-            return "redirect:/"; // başarılı giriş
-        } else {
-            model.addAttribute("error", "Invalid username or password");
+        else{
+            model.addAttribute("error","Invalid username or password");
             return "login";
         }
     }

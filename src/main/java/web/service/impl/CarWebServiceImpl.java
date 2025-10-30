@@ -3,6 +3,7 @@ package web.service.impl;
 import entities.Car;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import repository.CarRepository;
 import web.service.ICarWebService;
@@ -23,12 +24,8 @@ public class CarWebServiceImpl implements ICarWebService {
     //N+1 PROBLEM
     public List<Car> getAllCars() {
         try {
-            List<Car> cars = carRepository.findAll();
+            List<Car> cars = carRepository.findAllWithBrand(); // custom query'i çağır
             if (cars == null) return List.of();
-            // Lazy load kontrolü
-            cars.forEach(car -> {
-                if (car.getBrand() != null) car.getBrand().getName();
-            });
             return cars;
         } catch (Exception e) {
             throw new BadRequestException("Error fetching cars: " + e.getMessage());
