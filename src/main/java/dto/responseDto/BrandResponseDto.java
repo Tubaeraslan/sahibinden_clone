@@ -1,7 +1,5 @@
 package dto.responseDto;
 
-import lombok.Getter;
-import lombok.Setter;
 
 public class BrandResponseDto {
     private Integer id;

@@ -2,8 +2,6 @@ package entities;
 
 import common.Auditable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "cars")
@@ -35,7 +33,6 @@ public class Car extends Auditable {
     private Brand brand;
 
     public Car(){};
-
     public Car(Integer id, String model, Integer year, double price, Integer km, String color, Brand brand) {
         this.id = id;
         this.model = model;

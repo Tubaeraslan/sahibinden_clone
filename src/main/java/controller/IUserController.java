@@ -2,12 +2,8 @@ package controller;
 
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
-import entities.User;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 public interface IUserController {
 

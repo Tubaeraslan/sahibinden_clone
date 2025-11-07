@@ -3,7 +3,6 @@ package web.service.impl;
 import entities.Car;
 import exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import repository.CarRepository;
 import web.service.ICarWebService;

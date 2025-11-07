@@ -3,14 +3,12 @@ package controller.impl;
 import controller.IUserController;
 import dto.requestDto.UserRequestDto;
 import dto.responseDto.UserResponseDto;
-import entities.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/users")

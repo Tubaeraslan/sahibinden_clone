@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import service.ICarService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/rest/api/cars")
 public class CarControllerImpl implements ICarController {

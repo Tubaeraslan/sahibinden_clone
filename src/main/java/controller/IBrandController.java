@@ -7,8 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 public interface IBrandController {
 
     Page<BrandResponseDto> getAllBrands(Integer page, Integer size);

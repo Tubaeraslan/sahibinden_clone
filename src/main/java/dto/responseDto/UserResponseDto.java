@@ -1,8 +1,5 @@
 package dto.responseDto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 //api den istemciye dönen değer
 public class UserResponseDto {

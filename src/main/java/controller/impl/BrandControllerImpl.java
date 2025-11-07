@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import service.IBrandService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/rest/api/brands")
 public class BrandControllerImpl implements IBrandController {

@@ -13,10 +13,6 @@ import org.springframework.stereotype.Service;
 import repository.BrandRepository;
 import service.IBrandService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 public class BrandServiceImpl implements IBrandService {
 

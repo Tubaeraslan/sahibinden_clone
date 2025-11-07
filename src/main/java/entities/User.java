@@ -2,8 +2,6 @@ package entities;
 
 import common.Auditable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 
 //ilerde veritabanı ile birleştir

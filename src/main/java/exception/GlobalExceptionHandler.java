@@ -2,6 +2,8 @@ package exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,7 +47,18 @@ public class GlobalExceptionHandler {
         body.put("path", request.getDescription(false));
 
         // İlk validation hatasını al
-        String errorMessage = ex.getBindingResult().getFieldError().getDefaultMessage();
+        //getFieldError() her zaman bir hata döndürmez null da dönebilir. nullpointerexception could be thrown
+        String errorMessage ;
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        ObjectError globalError = ex.getBindingResult().getGlobalError();
+
+        if (fieldError != null) {
+            errorMessage = fieldError.getDefaultMessage();
+        } else if (globalError != null) {
+            errorMessage = globalError.getDefaultMessage();
+        } else {
+            errorMessage = "Validation error";
+        }
         body.put("message", errorMessage);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

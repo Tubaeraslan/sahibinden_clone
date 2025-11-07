@@ -2,8 +2,6 @@ package entities;
 
 import common.Auditable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -23,7 +21,6 @@ public class Brand extends Auditable {
     private List<Car> cars;
 
     public Brand(){};
-
     public Brand(Integer id, String name) {
         this.id = id;
         this.name = name;

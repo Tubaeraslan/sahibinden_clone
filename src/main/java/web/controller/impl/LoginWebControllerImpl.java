@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import repository.UserRepository;
 import service.IUserService;
-import service.impl.UserServiceImpl;
 import web.controller.ILoginWebController;
-
-import java.util.List;
 
 @Controller
 public class LoginWebControllerImpl implements ILoginWebController {

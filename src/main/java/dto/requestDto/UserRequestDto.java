@@ -1,7 +1,5 @@
 package dto.requestDto;
 
-import lombok.Getter;
-import lombok.Setter;
 import jakarta.validation.constraints.NotEmpty;
 
 
