@@ -24,6 +24,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Spring Boot Starterlar -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
