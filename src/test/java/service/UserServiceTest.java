@@ -18,14 +18,14 @@ public class UserServiceTest {
     @Test
     void testGetUserById_ReturnsCorrectUser_WhenIdExists() {
         UserRequestDto dto = new UserRequestDto();
-        dto.setUserName("Tuba");
+        dto.setUserName("Tuba" + System.currentTimeMillis());
         dto.setEmail("tuba@example.com");
         dto.setPassword("12345");
 
         UserResponseDto created = userService.addUser(dto);
 
         UserResponseDto found = userService.getUserById(created.getId());
-        assertEquals("Tuba", found.getUserName());
+        assertEquals(dto.getUserName(), found.getUserName());
         assertEquals("tuba@example.com", found.getEmail());
     }
 
@@ -37,21 +37,21 @@ public class UserServiceTest {
     @Test
     void testCreateUser_SavesAndReturnsUser() {
         UserRequestDto dto = new UserRequestDto();
-        dto.setUserName("Ahmet");
+        dto.setUserName("Ahmet" + System.currentTimeMillis());
         dto.setEmail("ahmet@example.com");
         dto.setPassword("secret");
 
         UserResponseDto saved = userService.addUser(dto);
 
         assertNotNull(saved.getId());
-        assertEquals("Ahmet", saved.getUserName());
+        assertEquals(dto.getUserName(), saved.getUserName());
         assertEquals("ahmet@example.com", saved.getEmail());
     }
 
     @Test
     void testUpdateUser_ChangesEmailSuccessfully() {
         UserRequestDto dto = new UserRequestDto();
-        dto.setUserName("Ali");
+        dto.setUserName("Ali" + System.currentTimeMillis());
         dto.setEmail("ali@oldmail.com");
         dto.setPassword("1234");
 
@@ -66,7 +66,7 @@ public class UserServiceTest {
     @Test
     void testDeleteUser_RemovesUserSuccessfully() {
         UserRequestDto dto = new UserRequestDto();
-        dto.setUserName("Mehmet");
+        dto.setUserName("Mehmet" + System.currentTimeMillis());
         dto.setEmail("mehmet@example.com");
         dto.setPassword("123456");
 

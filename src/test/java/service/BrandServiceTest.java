@@ -34,12 +34,12 @@ public class BrandServiceTest {
     @Test
     void testCreateBrand_SavesAndReturnsBrand() {
         BrandRequestDto dto = new BrandRequestDto();
-        dto.setName("Deneme");
-
+        String randomName = "Brand_" + System.currentTimeMillis();
+        dto.setName(randomName);
         BrandResponseDto saved = brandService.addBrand(dto);
 
         assertNotNull(saved.getId());
-        assertEquals("Deneme", saved.getName());
+        assertEquals(randomName, saved.getName());
     }
 
     // UPDATE testi
