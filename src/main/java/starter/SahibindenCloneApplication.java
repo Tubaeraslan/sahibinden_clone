@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"entities","common"})
-@ComponentScan(basePackages = {"starter", "controller", "service", "repository" , "exception","mapper","web","security"})
+@ComponentScan(basePackages = {"starter", "controller", "service", "repository" , "exception","mapper","web","security","log"})
 @EnableJpaRepositories(basePackages = {"repository"})
 @EnableJpaAuditing
 public class SahibindenCloneApplication {

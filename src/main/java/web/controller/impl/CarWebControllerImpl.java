@@ -2,6 +2,7 @@ package web.controller.impl;
 
 import dto.requestDto.CarRequestDto;
 import entities.Car;
+import log.SearchLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,9 @@ public class CarWebControllerImpl implements ICarWebController {
     private CarRepository carRepository;
 
     @Autowired
+    private SearchLogService searchLogService;
+
+    @Autowired
     public CarWebControllerImpl(CarWebServiceImpl carWebService) {
         this.carWebService = carWebService;
     }
@@ -59,6 +63,17 @@ public class CarWebControllerImpl implements ICarWebController {
             @RequestParam(required = false) String sort,
             Model model
     ) {
+
+        searchLogService.logSearch(
+                brand,
+                query,
+                minPrice,
+                maxPrice,
+                minYear,
+                maxYear,
+                color,
+                sort
+        );
         // Tüm arabaları çek
         List<Car> cars = carWebService.getAllCars();
 
